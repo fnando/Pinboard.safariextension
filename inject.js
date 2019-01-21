@@ -4,32 +4,32 @@
   }
 
   function getDescription() {
-    var description = window.getSelection() + '';
+    var description = window.getSelection() + "";
 
     if (!description) {
-      var element = document.querySelector('meta[name=description], meta[itemprop=description], meta[property="og:description"]');
+      var element = document.querySelector("meta[name=description], meta[itemprop=description], meta[property='og:description']");
       description = (element && element.content);
     }
 
-    return description || '';
+    return description || "";
   }
 
   function buildUrl() {
     var url = [
-      'https://pinboard.in/add?next=same',
-      'url=' + encodeURIComponent(location.href),
-      'title=' + encodeURIComponent(document.title || ''),
-      'description=' + encodeURIComponent(getDescription())
-    ].join('&');
+      "https://pinboard.in/add?next=same",
+      "url=" + encodeURIComponent(location.href),
+      "title=" + encodeURIComponent(document.title || ""),
+      "description=" + encodeURIComponent(getDescription())
+    ].join("&");
 
-    safari.self.tab.dispatchMessage('redirect', [url]);
+    safari.self.tab.dispatchMessage("redirect", [url]);
   }
 
-  safari.self.addEventListener('message', function(event) {
+  safari.self.addEventListener("message", function(event) {
     buildUrl();
   }, false);
 
-  window.addEventListener('keydown', function(event) {
+  window.addEventListener("keydown", function(event) {
     var trigger = event.shiftKey && event.metaKey && event.which === 80; // cmd-shift-P
 
     if (trigger) {
